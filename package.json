@@ -1,7 +1,7 @@
 {
   "name": "node-pdfbox",
   "version": "0.0.1",
-  "description": "Node PDFBox apache wrapper",
+  "description": "Node bridge module to library PDFBox",
   "main": "index.js",
   "scripts": {
     "test": "gulp test"
