@@ -1,0 +1,24 @@
+{
+  "name": "node-pdfbox",
+  "version": "0.0.1",
+  "description": "Node PDFBox apache wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "pdf",
+    "pdfbox",
+    "apache"
+  ],
+  "author": "Pedro Lucas da Silva Junior <pedro@objota.com.br>",
+  "license": "MIT",
+  "dependencies": {
+    "java": "^0.6.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.3.0",
+    "jasmine": "^2.4.1"
+  }
+}
