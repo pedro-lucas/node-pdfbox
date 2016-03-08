@@ -16,12 +16,16 @@ public class PDFDocument {
     this.document = PDDocument.load(new File(path));
   }
 
-  public static PDFDocument load(String path) throws IOException {
-    return new PDFDocument(path);
+  public int pagesCount() {
+    return document.getNumberOfPages();
   }
 
-  public int pagesCount() {
-    return this.document.getNumberOfPages();
+  public PDFPage getPage(int index) {
+    return new PDFPage(document, index);
+  }
+
+  public static PDFDocument load(String path) throws IOException {
+    return new PDFDocument(path);
   }
 
 }
