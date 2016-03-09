@@ -4,84 +4,79 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
-import java.io.IOException;
-import java.io.File;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
-import javax.imageio.ImageIO;
-import org.apache.pdfbox.rendering.ImageType;
 
+import java.awt.*;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PageDrawer;
+import org.apache.pdfbox.tools.PDFBox;
+
+/**
+ * Created by PedroLucas on 3/9/16.
+ */
 public class PDFPage {
 
-  public static final int BOX_TRIM = 1;
-  public static final int BOX_ART = 2;
-  public static final int BOX_CROP = 3;
-  public static final int BOX_MEDIA = 4;
-  public static final int BOX_BLEED = 5;
-  public static final int BOX_BOUNDING = 6;
+    private PDPage page;
+    private int pageIndex;
+    private PDDocument document;
 
-  private PDPage page;
-  private int pageIndex;
-  private PDDocument document;
-
-  public PDFPage(PDDocument document, int index) {
-    this.document = document;
-    this.pageIndex = index;
-    this.page = document.getPage(index);
-  }
-
-  public PDRectangle getBox(int type) {
-    switch(type) {
-      case PDFPage.BOX_TRIM:
-        return page.getTrimBox();
-      case PDFPage.BOX_ART:
-        return page.getArtBox();
-      case PDFPage.BOX_CROP:
-        return page.getCropBox();
-      case PDFPage.BOX_MEDIA:
-        return page.getMediaBox();
-      case PDFPage.BOX_BLEED:
-        return page.getBleedBox();
+    public PDFPage(PDDocument document, int index) {
+        this.document = document;
+        this.pageIndex = index;
+        this.page = document.getPage(index);
     }
-    return page.getBBox();
-  }
 
-  public void extractPage(String savePath) throws IOException {
-    PDDocument doc = new PDDocument();
-    doc.addPage(page);
-    doc.save(savePath);
-    doc.close();
-  }
+    public PDRectangle getRect() {
+        return page.getCropBox();
+    }
 
-  public void writeImage(String path, int boxType, int width, int height) throws IOException {
+    public void extractPage(String savePath) throws IOException {
+        PDDocument doc = new PDDocument();
+        doc.addPage(page);
+        doc.save(savePath);
+        doc.close();
+    }
 
-    File file = new File(path);
+    public float getAspectFillScale(int width, int height) {
 
-    PDRectangle currentBox = getBox(boxType);
-    PDRectangle bBox = getBox(PDFPage.BOX_BOUNDING);
+        PDRectangle rect = this.getRect();
 
-    float cWidth = currentBox.getWidth();
-    float cHeight = currentBox.getHeight();
-    float scale = Math.max((float)width / cWidth, (float)height / cHeight);
+        float cWidth = rect.getWidth();
+        float cHeight = rect.getHeight();
 
-    int sWidth = (int)(scale * cWidth);
-    int sHeight = (int)(scale * cHeight);
-    int x = (int)((bBox.getWidth() * scale) - sWidth) / 2;
-    int y = (int)((bBox.getHeight() * scale) - sHeight) / 2;
+        return Math.max((float) width / cWidth, (float) height / cHeight);
+    }
 
-    PDFRenderer render = new PDFRenderer(document);
+    public float getAspectFitScale(int width, int height) {
 
-    BufferedImage image = render.renderImage(pageIndex, scale, ImageType.ARGB);
+        PDRectangle rect = this.getRect();
 
-    System.out.println("\nx: " + x + "\ny: " + y + "\nwidth: " + sWidth + "\nheight: " + sHeight);
+        float cWidth = rect.getWidth();
+        float cHeight = rect.getHeight();
 
-    BufferedImage bufferedImage = new BufferedImage(sWidth, sHeight, BufferedImage.TYPE_INT_RGB);
-    Graphics2D bufImageGraphics = bufferedImage.createGraphics();
+        return Math.min((float) width / cWidth, (float) height / cHeight);
+    }
 
-    bufImageGraphics.drawImage(image, x, y, null);
+    public PDFPageImage getImage() throws IOException {
+        return this.getImage(1.0f);
+    }
 
-    ImageIO.write(bufferedImage, "jpg", file);
+    public PDFPageImage getImage(float scale) throws IOException {
+        PDFRenderer render = new PDFRenderer(document);
+        return new PDFPageImage(render.renderImage(pageIndex, scale));
+    }
 
-  }
+    public PDFPageImage getImage(int width, int height) throws IOException {
+
+        float scale = this.getAspectFillScale(width, height);
+        PDFPageImage image = this.getImage(scale);
+
+        int x = (int)((image.getImage().getWidth() - width) / 2.0f);
+        int y = (int)((image.getImage().getHeight() - height) / 2.0f);
+
+        return image.cropImage(new Rectangle(x, y, width, height));
+
+    }
 
 }

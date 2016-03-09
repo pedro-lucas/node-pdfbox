@@ -8,13 +8,14 @@ const clean = require('gulp-clean');
 
 
 gulp.task('clear-test', function() {
-	return gulp.src('spec/build/file.pdf', {read: false}).pipe(clean());
+	return gulp.src('spec/tmp/page.pdf', {read: false}).pipe(clean());
 });
 
 gulp.task('test', ['clear-test'], function() {
 	gulp.src('spec/simple-test.js').pipe(jasmine({verbose:true}));
 });
 
+/*
 gulp.task('java-compile', shell.task([
   'javac -classpath .:"' + path.join(__dirname, 'src-library/*')
 	+ '" ' + path.join(__dirname, 'src-java/br/com/appmania/*.java')
@@ -23,7 +24,5 @@ gulp.task('java-compile', shell.task([
 gulp.task('compile', ['java-compile'], function() {
 	gutil.log(gutil.colors.green('Java classes compiled'));
 });
-
-gulp.task('default', function() {
-	sequence(['compile', 'test']);
-});
+*/
+gulp.task('default', ['test']);
