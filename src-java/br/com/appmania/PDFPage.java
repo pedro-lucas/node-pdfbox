@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.awt.image.BufferedImage;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PageDrawer;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.tools.PDFBox;
 
 /**
@@ -77,6 +78,14 @@ public class PDFPage {
 
         return image.cropImage(new Rectangle(x, y, width, height));
 
+    }
+
+    public String getText() throws IOException {
+        PDFTextStripper textStripper = new PDFTextStripper();
+        textStripper.setStartPage(pageIndex);
+        textStripper.setEndPage(pageIndex+1);
+        textStripper.setLineSeparator("\n");
+        return textStripper.getText(document);
     }
 
 }

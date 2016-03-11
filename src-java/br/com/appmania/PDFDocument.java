@@ -3,6 +3,7 @@ package br.com.appmania;
 import java.io.File;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
@@ -35,4 +36,16 @@ public class PDFDocument {
         return new PDFDocument(path);
     }
 
+    public PDDocument getDocument() {
+        return document;
+    }
+
+    public String getInformation(String name) {
+        Object value = document.getDocumentInformation().getPropertyStringValue(name);
+        return value == null ? "" : value.toString();
+    }
+
+    public PDDocumentInformation getInformation() {
+        return document.getDocumentInformation();
+    }
 }

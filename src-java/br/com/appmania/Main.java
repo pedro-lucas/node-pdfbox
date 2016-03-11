@@ -13,31 +13,32 @@ public class Main {
         PDFDocument doc = null;
 
         try {
-//            doc = PDFDocument.load("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/files/multi-page.pdf");
-            doc = PDFDocument.load("/Users/PedroLucas/Desktop/teste1.pdf");
+            doc = PDFDocument.load("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/files/multi-page.pdf");
+//            doc = PDFDocument.load("/Users/PedroLucas/Desktop/teste1.pdf");
         } catch (IOException e) {
-
             e.printStackTrace();
             return;
         }
 
+        System.out.println("Title: " + doc.getInformation("Title"));
+        System.out.println("author: " + doc.getInformation("Author"));
+
         PDFPage page = doc.getPage(0);
         PDFPageImage pageImage = null;
-        PDFPageImage cropImage = null;
 
         try {
-            //pageImage = page.getImage(page.getAspectFillScale(PDFBoxType.CROP, 768, 1024));
 
-            pageImage = page.getImage(1.5f);
+            pageImage = page.getImage(page.getAspectFillScale(768, 1024));
+            /*
+            int x = (int)((pageImage.getImage().getWidth() - 300) / 2);
+            int y = (int)((pageImage.getImage().getHeight() - 300) / 2);
 
-            //int x = (int)((pageImage.getImage().getWidth() - 768) / 2);
-            //int y = (int)((pageImage.getImage().getHeight() - 1024) / 2);
-            //cropImage = pageImage.cropImage(new Rectangle(x, y, 768, 1024));
+            pageImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/normal.png", "png");
+            pageImage.cropImage(new Rectangle(x, y, 300, 300)).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped.png", "png");
+            pageImage.fitImage(100, 100).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/fit.png", "png");
 
-            pageImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/normal.jpg");
-            //pageImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped-from-pdf.jpg");
-            //cropImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped.jpg");
-            //pageImage.fitImage(768, 1024).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/fit.jpg");
+            System.out.println("TEXT: " + page.getText());
+            */
 
         } catch (IOException e) {
             e.printStackTrace();
