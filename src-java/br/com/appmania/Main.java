@@ -28,7 +28,7 @@ public class Main {
 
         try {
 
-            pageImage = page.getImage(page.getAspectFillScale(768, 1024));
+            pageImage = page.getImage();
             /*
             int x = (int)((pageImage.getImage().getWidth() - 300) / 2);
             int y = (int)((pageImage.getImage().getHeight() - 300) / 2);

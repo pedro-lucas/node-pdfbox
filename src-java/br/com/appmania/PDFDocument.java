@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 
@@ -31,7 +30,6 @@ public class PDFDocument {
         return new PDFPage(document, index);
     }
 
-    @Contract("_ -> !null")
     public static PDFDocument load(String path) throws IOException {
         return new PDFDocument(path);
     }

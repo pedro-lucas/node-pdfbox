@@ -5,13 +5,9 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.io.IOException;
-import java.awt.image.BufferedImage;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.tools.PDFBox;
 
 /**
  * Created by PedroLucas on 3/9/16.
@@ -60,7 +56,7 @@ public class PDFPage {
     }
 
     public PDFPageImage getImage() throws IOException {
-        return this.getImage(1.0f);
+        return getImage(1.0f);
     }
 
     public PDFPageImage getImage(float scale) throws IOException {

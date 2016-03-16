@@ -2,8 +2,6 @@ package br.com.appmania;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -47,16 +45,42 @@ public class PDFPageImage {
 
     }
 
+    public int getWidth() {
+        return  image.getWidth();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
+    }
+
     public void save(String path, String formatName) throws IOException {
         ImageIO.write(image, formatName, new File(path));
     }
 
     public void save(String path) throws IOException {
-        this.save(path, PDFPageImage.IMAGE_FORMAT_JPG);
+
+        String ext = getFileExtension(new File(path));
+
+        if(ext.equals(PDFPageImage.IMAGE_FORMAT_PNG)) {
+            ext = PDFPageImage.IMAGE_FORMAT_PNG;
+        }else {
+            ext = PDFPageImage.IMAGE_FORMAT_JPG;
+        }
+
+        this.save(path, ext);
     }
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    private String getFileExtension(File file) {
+        String name = file.getName();
+        try {
+            return name.substring(name.lastIndexOf(".") + 1);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 }

@@ -7,21 +7,38 @@ const PDFDocument = require('../lib/PDFDocument');
 const PDFPage = require('../lib/PDFPage');
 const PDFBox = require('../lib/PDFBox');
 
-describe("PDF document basic operations", function() {
+describe("PDF Document operations sync", function() {
 
   let doc = null;
   let page = null;
+  let image = null;
 
   beforeEach(function() {
     jasmine.addMatchers(matchers);
   });
 
-  it('Load document sync', function() {
+  it('New document', function() {
     doc = PDFBox.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
     expect(doc).toBeInstanceOf(PDFDocument);
   });
 
-  it('Pages count sync', function() {
+  it('Document title', function() {
+    expect(doc.getInfoSync('Title')).toEqual("CakePHP");
+  });
+
+  it('Document author', function() {
+    expect(doc.getAuthorSync()).toEqual("CakePHP Org");
+  });
+
+  it('Document subject', function() {
+    expect(doc.getSubjectSync()).toEqual("Writing node-pdfbox module");
+  });
+
+  it('Document keywords', function() {
+    expect(doc.getKeywordsSync()).toEqual("Some tests added");
+  });
+
+  it('Pages count', function() {
     expect(doc.pagesCountSync() > 0).toBeTruthy();
   });
 
@@ -30,33 +47,32 @@ describe("PDF document basic operations", function() {
     expect(page).toBeInstanceOf(PDFPage);
   });
 
-  it('Get page art box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_ART).width > 0).toBeTruthy();
+  it('Get CropBox size from page', function() {
+    expect(page.getRectSync().width > 0).toBeTruthy();
   });
 
-  it('Get page bleed box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_BLEED).width > 0).toBeTruthy();
+  it('Get page text', function() {
+    expect(page.getTextSync()).toMatch(/CakePHP/);
   });
 
-  it('Get page bounding box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_BOUNDING).width > 0).toBeTruthy();
+  it('Get page image', function() {
+    image = page.getImageSync();
+    expect(image).toBeInstanceOf(PDFPageImage);
   });
 
-  it('Get page crop box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_CROP).width > 0).toBeTruthy();
-  });
+  it('Get save image', function() {
 
-  it('Get page media box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_MEDIA).width > 0).toBeTruthy();
-  });
+    const file = path.join(__dirname, 'tmp', 'image.jpg');
 
-  it('Get page trim box', function() {
-    expect(page.getBoxSync(PDFPage.BOX_TRIM).width > 0).toBeTruthy();
+    image.saveSync(file);
+
+    expect(file).toHasFile();
+
   });
 
   it('Export page', function() {
 
-    const file = path.join(__dirname, 'build', 'page.pdf');
+    const file = path.join(__dirname, 'tmp', 'page.pdf');
 
     page.extractPageSync(file);
 
@@ -64,10 +80,12 @@ describe("PDF document basic operations", function() {
 
   });
 
+  /*
   it('Create image', function() {
     const file = path.join(__dirname, 'build', 'image.jpg');
     page.writeImageSync(file);
     expect(file).toHasFile();
   });
+  */
 
 });
