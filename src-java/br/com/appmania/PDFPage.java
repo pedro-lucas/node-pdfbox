@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -61,7 +62,10 @@ public class PDFPage {
 
     public PDFPageImage getImage(float scale) throws IOException {
         PDFRenderer render = new PDFRenderer(document);
-        return new PDFPageImage(render.renderImage(pageIndex, scale));
+        System.out.println("before buffer");
+        BufferedImage image = render.renderImage(pageIndex, scale);
+        System.out.println("after buffer");
+        return new PDFPageImage(image);
     }
 
     public PDFPageImage getImage(int width, int height) throws IOException {
