@@ -62,9 +62,7 @@ public class PDFPage {
 
     public PDFPageImage getImage(float scale) throws IOException {
         PDFRenderer render = new PDFRenderer(document);
-        System.out.println("before buffer");
         BufferedImage image = render.renderImage(pageIndex, scale);
-        System.out.println("after buffer");
         return new PDFPageImage(image);
     }
 
@@ -76,7 +74,7 @@ public class PDFPage {
         int x = (int)((image.getImage().getWidth() - width) / 2.0f);
         int y = (int)((image.getImage().getHeight() - height) / 2.0f);
 
-        return image.cropImage(new Rectangle(x, y, width, height));
+        return image.crop(new Rectangle(x, y, width, height));
 
     }
 
@@ -86,6 +84,10 @@ public class PDFPage {
         textStripper.setEndPage(pageIndex+1);
         textStripper.setLineSeparator("\n");
         return textStripper.getText(document);
+    }
+
+    public PDPage getPage() {
+        return page;
     }
 
 }

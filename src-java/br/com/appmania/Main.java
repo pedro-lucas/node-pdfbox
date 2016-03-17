@@ -1,6 +1,5 @@
 package br.com.appmania;
 
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -34,7 +33,7 @@ public class Main {
             int y = (int)((pageImage.getImage().getHeight() - 300) / 2);
 
             pageImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/normal.png", "png");
-            pageImage.cropImage(new Rectangle(x, y, 300, 300)).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped.png", "png");
+            pageImage.crop(new Rectangle(x, y, 300, 300)).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped.png", "png");
             pageImage.fitImage(100, 100).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/fit.png", "png");
 
             System.out.println("TEXT: " + page.getText());

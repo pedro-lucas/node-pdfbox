@@ -3,9 +3,9 @@
 const matchers = require('./matchers');
 const path = require('path');
 
-const PDFDocument = require('../lib/PDFDocument');
-const PDFPage = require('../lib/PDFPage');
-const PDFBox = require('../lib/PDFBox');
+const PDFDocument = require('../lib/pdf-document');
+const PDFPage = require('../lib/pdf-page');
+const PDFPageImage = require('../lib/pdf-page-image');
 
 describe("PDF Document operations sync", function() {
 
@@ -18,7 +18,7 @@ describe("PDF Document operations sync", function() {
   });
 
   it('New document', function() {
-    doc = PDFBox.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
+    doc = PDFDocument.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
     expect(doc).toBeInstanceOf(PDFDocument);
   });
 
@@ -55,16 +55,56 @@ describe("PDF Document operations sync", function() {
     expect(page.getTextSync()).toMatch(/CakePHP/);
   });
 
-  it('Get page image', function() {
+  it('Create image from page', function() {
     image = page.getImageSync();
     expect(image).toBeInstanceOf(PDFPageImage);
   });
 
-  it('Get save image', function() {
+  it('Save image', function() {
 
-    const file = path.join(__dirname, 'tmp', 'image.jpg');
+    const file = path.join(__dirname, 'tmp', 'image.png');
 
     image.saveSync(file);
+
+    expect(file).toHasFile();
+
+  });
+
+  it('Fit image', function() {
+
+    const file = path.join(__dirname, 'tmp', 'fit.png');
+
+    image.fitSync(100, 100).saveSync(file);
+
+    expect(file).toHasFile();
+
+  });
+
+  it('Crop image', function() {
+
+    const file = path.join(__dirname, 'tmp', 'crop.png');
+
+    image.cropSync(301, 301).saveSync(file);
+
+    expect(file).toHasFile();
+
+  });
+
+  it('Crop image with area', function() {
+
+    const file = path.join(__dirname, 'tmp', 'crop-area.png');
+
+    image.cropSync(612, 300, {vertical: 'top'}).saveSync(file);
+
+    expect(file).toHasFile();
+
+  });
+
+  it('Crop image with position', function() {
+
+    const file = path.join(__dirname, 'tmp', 'crop-position.png');
+
+    image.cropInRectSync(200, 200, 300, 300).saveSync(file);
 
     expect(file).toHasFile();
 
@@ -77,6 +117,24 @@ describe("PDF Document operations sync", function() {
     page.extractPageSync(file);
 
     expect(file).toHasFile();
+
+  });
+
+  it('Add pages from pdf', function() {
+
+    const file = path.join(__dirname, 'tmp', 'document-append.pdf');
+    const appendFile = path.join(__dirname, 'files', 'single-page.pdf');
+
+    page.extractPageSync(file);
+
+    let nDocument = PDFDocument.loadSync(file);
+    nDocument.addPagesSync(appendFile);
+
+    //nDocument.addPageSync(1);
+
+    nDocument.saveSync();
+
+    expect(nDocument.pagesCountSync() == 2).toBeTruthy();
 
   });
 

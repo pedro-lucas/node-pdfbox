@@ -20,12 +20,12 @@ public class PDFPageImage {
         this.image = image;
     }
 
-    public PDFPageImage cropImage(Rectangle rect) {
+    public PDFPageImage crop(Rectangle rect) {
         return new PDFPageImage(image.getSubimage(rect.x, rect.y, rect.width, rect.height));
 
     }
 
-    public PDFPageImage fitImage(int width, int height) {
+    public PDFPageImage fit(int width, int height) {
 
         int w = image.getWidth();
         int h = image.getHeight();
