@@ -52,6 +52,7 @@ describe("PDF Document operations sync", function() {
   });
 
   it('Get page text', function() {
+    console.log('text', page.getTextSync());
     expect(page.getTextSync()).toMatch(/CakePHP/);
   });
 
@@ -120,6 +121,21 @@ describe("PDF Document operations sync", function() {
 
   });
 
+  it('Create and add one page to new pdf', function() {
+
+    const file = path.join(__dirname, 'tmp', 'one-page-document.pdf');
+    const newPage = doc.getPageSync(10);
+
+    newPage.extractPageSync(file);
+
+    let nDocument = PDFDocument.loadSync(file);
+    nDocument.addPageSync(doc.getPageSync(3));
+    nDocument.saveSync();
+
+    expect(nDocument.pagesCountSync() == 2).toBeTruthy();
+
+  });
+
   it('Add pages from pdf', function() {
 
     const file = path.join(__dirname, 'tmp', 'document-append.pdf');
@@ -128,13 +144,10 @@ describe("PDF Document operations sync", function() {
     page.extractPageSync(file);
 
     let nDocument = PDFDocument.loadSync(file);
-    nDocument.addPagesSync(appendFile);
-
-    //nDocument.addPageSync(1);
-
+    nDocument.addPagesSync(doc, 10, 20, 0);
     nDocument.saveSync();
 
-    expect(nDocument.pagesCountSync() == 2).toBeTruthy();
+    expect(nDocument.pagesCountSync() == 11).toBeTruthy();
 
   });
 
