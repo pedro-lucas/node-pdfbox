@@ -47,12 +47,11 @@ describe("PDF Document operations sync", function() {
     expect(page).toBeInstanceOf(PDFPage);
   });
 
-  it('Get CropBox size from page', function() {
+  it('Get crop box', function() {
     expect(page.getRectSync().width > 0).toBeTruthy();
   });
 
   it('Get page text', function() {
-    console.log('text', page.getTextSync());
     expect(page.getTextSync()).toMatch(/CakePHP/);
   });
 
@@ -151,12 +150,169 @@ describe("PDF Document operations sync", function() {
 
   });
 
-  /*
-  it('Create image', function() {
-    const file = path.join(__dirname, 'build', 'image.jpg');
-    page.writeImageSync(file);
-    expect(file).toHasFile();
+  describe("PDF Document operations async", function() {
+
+    let doc = null;
+    let page = null;
+    let image = null;
+
+    beforeEach(function() {
+
+      doc = PDFDocument.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
+      page = doc.getPageSync(0);
+      image = page.getImageSync();
+
+      jasmine.addMatchers(matchers);
+
+    });
+
+    it('New document (promise)', function(done) {
+      PDFDocument.load(path.join(__dirname, 'files', 'multi-page.pdf'))
+      .then(function(val) {
+        expect(val).toBeInstanceOf(PDFDocument);
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Document title', function(done) {
+      doc.getInfo('Title')
+      .then(function(val) {
+        expect(val).toEqual("CakePHP");
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Document author', function(done) {
+      doc.getAuthor()
+      .then(function(val) {
+        expect(val).toEqual("CakePHP Org");
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Document subject', function(done) {
+      doc.getSubject()
+      .then(function(val) {
+        expect(val).toEqual("Writing node-pdfbox module");
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Document keywords', function(done) {
+      doc.getKeywords()
+      .then(function(val) {
+        expect(val).toEqual("Some tests added");
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Pages count', function(done) {
+      doc.pagesCount()
+      .then(function(val) {
+        expect(val > 0).toBeTruthy();
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Get page', function(done) {
+      doc.getPage(0)
+      .then(function(val) {
+        expect(val).toBeInstanceOf(PDFPage);
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Get crop box', function(done) {
+      page.getRect()
+      .then(function(rect) {
+        expect(rect.width > 0 && rect.height > 0).toBeTruthy();
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Get page text', function(done) {
+      page.getText()
+      .then(function(text) {
+        expect(text).toMatch(/CakePHP/);
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+    });
+
+    it('Create image from page', function(done) {
+      page.getImage()
+      .then(function(image) {
+        expect(image).toBeInstanceOf(PDFPageImage);
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      })
+    });
+
+    it('Save image', function(done) {
+
+      const file = path.join(__dirname, 'tmp', 'image-async.png');
+
+      image.save(file)
+      .then(function() {
+        expect(file).toHasFile();
+      })
+      .catch(function(err) {
+        throw err;
+      })
+      .finally(function() {
+        done();
+      });
+
+    });
+
   });
-  */
 
 });
