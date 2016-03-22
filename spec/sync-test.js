@@ -17,7 +17,7 @@ describe("PDF Document operations sync", function() {
     jasmine.addMatchers(matchers);
   });
 
-  it('New document', function() {
+  it('Load document', function() {
     doc = PDFDocument.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
     expect(doc).toBeInstanceOf(PDFDocument);
   });

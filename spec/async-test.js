@@ -23,7 +23,7 @@ describe("PDF Document operations async", function() {
 
   });
 
-  it('New document (promise)', function(done) {
+  it('Load document', function(done) {
     PDFDocument.load(path.join(__dirname, 'files', 'multi-page.pdf'))
     .then(function(val) {
       expect(val).toBeInstanceOf(PDFDocument);

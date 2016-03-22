@@ -1,10 +1,29 @@
 {
   "name": "node-pdfbox",
   "version": "0.0.1",
-  "description": "Node bridge module to library PDFBox",
+  "description": "Bridge module to library Apache PDFBox",
   "main": "index.js",
+  "homepage": "http://objota.com.br",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pedro-lucas/node-pdfbox"
+  },
+  "bugs": "https://github.com/pedro-lucas/node-pdfbox/issues",
+  "maintainers": [
+    {
+      "name": "Pedro Lucas",
+      "web": "http://objota.com.br"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Pedro Lucas",
+      "web": "http://objota.com.br"
+    }
+  ],
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "install": "gulp compile"
   },
   "keywords": [
     "pdf",
