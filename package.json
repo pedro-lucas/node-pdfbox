@@ -22,8 +22,7 @@
     }
   ],
   "scripts": {
-    "test": "gulp test",
-    "install": "gulp compile"
+    "test": "gulp test"
   },
   "keywords": [
     "pdf",
@@ -39,6 +38,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-util": "^3.0.7",
     "gulp-clean": "^0.3.2",
     "gulp-jasmine": "^2.3.0",
     "gulp-shell": "^0.5.2",
