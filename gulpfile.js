@@ -11,7 +11,7 @@ gulp.task('clear-test', function() {
 });
 
 gulp.task('test', ['clear-test'], function() {
-	return gulp.src('spec/simple-test.js').pipe(jasmine({verbose:true}));
+	return gulp.src('spec/*-test.js').pipe(jasmine({verbose:true}));
 });
 
 gulp.task('java-compile', shell.task([
