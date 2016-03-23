@@ -15,12 +15,9 @@
       "web": "http://objota.com.br"
     }
   ],
-  "contributors": [
-    {
-      "name": "Pedro Lucas",
-      "web": "http://objota.com.br"
-    }
-  ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "scripts": {
     "test": "gulp test"
   },
