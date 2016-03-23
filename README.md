@@ -43,7 +43,7 @@ Async
 #### Basic operations
 
 ```js
-const Document = require('node-pdfbox');
+let Document = require('node-pdfbox');
 
 let document = Document.loadSync('/path/to/document.pdf');
 let page = document.getPageSync(0);
@@ -94,11 +94,19 @@ Document.load('/path/to/document.pdf')
 
 ```js
 
+let title = document.getInfoSync('Title');
+let title1 = document.getTitleSync(); //The same of getInfo
+let author = document.getAuthorSync();
+let subject = document.getSubjectSync();
+let keywords = document.getKeywordsSync();
+
 ```
 
 #### Number of pages
 
 ```js
+
+let numberOfPages = document.pagesCountSync();
 
 ```
 
@@ -106,11 +114,22 @@ Document.load('/path/to/document.pdf')
 
 ```js
 
+document.addPageSync(page); //PDFPage to end of file
+document.addPageSync('path.pdf', 0, 0); // add page (second) from path (first) at index (third)  
+
+document.addPagesSync('path.pdf'); //Copy all pages from path to end of document
+document.addPagesSync(otherDocument); //Copy all pages from PDFDocument
+document.addPagesSync(otherDocument, 0); //atIndex
+document.addPagesSync(otherDocument, 0, 10, 0); //start, end, atIndex
+
 ```
 
 #### Save document
 
 ```js
+
+document.saveSync(); //save current document
+document.save('path.pdf') //save as
 
 ```
 
