@@ -88,8 +88,8 @@ Document.load('/path/to/document.pdf')
 
 #### Save image
 
-
-
+Known issues
+------------
 
 Not implemented yet
 ------------

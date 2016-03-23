@@ -27,7 +27,8 @@
   "keywords": [
     "pdf",
     "pdfbox",
-    "apache"
+    "apache",
+    "node-pdfbox"
   ],
   "author": "Pedro Lucas da Silva Junior <pedro@objota.com.br>",
   "license": "MIT",
