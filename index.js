@@ -1,1 +1,1 @@
-module.exports = require('./lib/PDFBoxBridge');
+module.exports = require('./lib/pdf-document');

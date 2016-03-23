@@ -10,31 +10,86 @@ Installation
 
 This module require JVM configured on host machine to work. When you use this module with nw.js you need to specify this requisite on installation process.
 
-```
+```js
 bower install --save node-pdfbox
 ```
 
-Features
+Quick Examples
 -------
 
-1. Document
-    * [Load document](#load-document)
-    * [Get meta information](#get-meta-information)
-    * [Number of pages](#number-of-pages)
-    * [Get page](#list-of-pages)
-    * [Add pages to document](#add-pages)
-    * [Save](#save-document)
-2. Page
-    * [Get crop box rect](#get-crop-box-rect)
-    * [Get text](#get-text)
-    * [Create image](#create-image)
-    * [Extract page](#extract-page)
-    * [Get scale to fit](#scale-to-fit)
-    * [Get scale to fill](#scale-to-fill)
-3. Page image
-    * [Fit image](#fit-image)
-    * [Crop image](#crop-image)
-    * [Save](#save-image)
+If you want to call async operations just use the method without Sync suffix.
+
+#### Load document
+
+```js
+const Document = require('node-pdfbox');
+
+let document = Document.loadSync('/path/to/document.pdf');
+let page = document.getPageSync(0);
+let image = page.getImageSync();
+
+let newDocument = page.exportSync('path-to-new-document.pdf');
+newDocument.addPageSync(document.getPageSync(3));
+newDocument.addPageSync(document.getPageSync(3));
+
+image.save('path.jpg');
+image.save('path-ext.jpeg', 'jpg');
+
+```
+
+or
+
+```js
+
+Document.load('/path/to/document.pdf')
+.then(function(document) {
+  return document.getPage(0);
+})
+.then(function(page) {
+  return page.getImage(2.0) //scale
+})
+.then(function(image) {
+  //do something ...
+})
+.catch(function(err) {
+  console.error(err);
+})
+.finally(function() {
+  //Done!
+});
+
+```
+
+#### Get information
+
+#### Number of pages
+
+#### Add pages to document
+
+#### Save document
+
+#### Get page
+
+#### Get crop box rect
+
+#### Get scale to fill
+
+#### Get scale to fit
+
+#### Get text
+
+#### Extract page
+
+#### Create image
+
+#### Fit image
+
+#### Crop image
+
+#### Save image
+
+
+
 
 Not implemented yet
 ------------

@@ -113,10 +113,9 @@ describe("PDF Document operations sync", function() {
   it('Export page', function() {
 
     const file = path.join(__dirname, 'tmp', 'page.pdf');
+    const doc = page.extractSync(file);
 
-    page.extractPageSync(file);
-
-    expect(file).toHasFile();
+    expect(doc).toBeInstanceOf(PDFDocument);
 
   });
 
@@ -125,9 +124,7 @@ describe("PDF Document operations sync", function() {
     const file = path.join(__dirname, 'tmp', 'one-page-document.pdf');
     const newPage = doc.getPageSync(10);
 
-    newPage.extractPageSync(file);
-
-    let nDocument = PDFDocument.loadSync(file);
+    let nDocument = newPage.extractSync(file);
     nDocument.addPageSync(doc.getPageSync(3));
     nDocument.saveSync();
 
@@ -139,9 +136,7 @@ describe("PDF Document operations sync", function() {
 
     const file = path.join(__dirname, 'tmp', 'document-append.pdf');
 
-    page.extractPageSync(file);
-
-    let nDocument = PDFDocument.loadSync(file);
+    let nDocument = page.extractSync(file);
     nDocument.addPagesSync(doc, 10, 20, 0);
     nDocument.saveSync();
 

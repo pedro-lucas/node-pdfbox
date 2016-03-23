@@ -254,9 +254,9 @@ describe("PDF Document operations async", function() {
 
     const file = path.join(__dirname, 'tmp', 'page-async.pdf');
 
-    page.extractPage(file)
-    .then(function() {
-      expect(file).toHasFile();
+    page.extract(file)
+    .then(function(doc) {
+      expect(doc).toBeInstanceOf(PDFDocument);
     })
     .catch(function(err) {
       throw err;
@@ -274,10 +274,7 @@ describe("PDF Document operations async", function() {
 
     doc.getPage(10)
     .then(function(page) {
-      return page.extractPage(file);
-    })
-    .then(function() {
-      return PDFDocument.load(file);;
+      return page.extract(file);
     })
     .then(function(d) {
       nDocument = d;
@@ -305,10 +302,7 @@ describe("PDF Document operations async", function() {
 
     doc.getPage(10)
     .then(function(page) {
-      return page.extractPage(file);
-    })
-    .then(function() {
-      return PDFDocument.load(file);;
+      return page.extract(file);
     })
     .then(function(d) {
       nDocument = d;

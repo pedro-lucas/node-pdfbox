@@ -29,7 +29,7 @@ public class PDFPage {
         return page.getCropBox();
     }
 
-    public void extractPage(String savePath) throws IOException {
+    public void extract(String savePath) throws IOException {
         PDDocument doc = new PDDocument();
         doc.addPage(page);
         doc.save(savePath);
