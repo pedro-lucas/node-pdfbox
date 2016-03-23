@@ -3,9 +3,9 @@
 const matchers = require('./matchers');
 const path = require('path');
 
-const PDFDocument = require('../lib/pdf-document');
-const PDFPage = require('../lib/pdf-page');
-const PDFPageImage = require('../lib/pdf-page-image');
+const PDFDocument = require('../index');
+const PDFPage = PDFDocument.PDFPage;
+const PDFPageImage = PDFDocument.PDFPageImage;
 
 describe("PDF Document operations sync", function() {
 
