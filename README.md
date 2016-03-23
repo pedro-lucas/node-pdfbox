@@ -129,7 +129,7 @@ document.addPagesSync(otherDocument, 0, 10, 0); //start, end, atIndex
 ```js
 
 document.saveSync(); //save current document
-document.save('path.pdf') //save as
+document.saveSync('path.pdf') //save as
 
 ```
 
