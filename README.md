@@ -10,8 +10,10 @@ Installation
 
 This module require JVM configured on host machine to work. When you use this module with nw.js you need to specify this requisite on installation process.
 
+You can use node-pdfbox with NW.js, but don't forget to install JDK to compile java module, after that you can distribute you app in a machine with JVM installed.
+
 ```js
-bower install --save node-pdfbox
+npm install --save node-pdfbox
 ```
 
 Quick Examples
@@ -137,11 +139,15 @@ document.saveSync('path.pdf') //save as
 
 ```js
 
+let page = document.getPageSync(0);
+
 ```
 
 #### Get crop box rect
 
 ```js
+
+page.getRectSync();
 
 ```
 
@@ -149,11 +155,15 @@ document.saveSync('path.pdf') //save as
 
 ```js
 
+page.getAspectFillScaleSync(100, 100); //width, height
+
 ```
 
 #### Get scale to fit
 
 ```js
+
+page.getAspectFitScaleSync(100, 100); //width, height
 
 ```
 
@@ -161,11 +171,15 @@ document.saveSync('path.pdf') //save as
 
 ```js
 
+page.getTextSync();
+
 ```
 
 #### Extract page
 
 ```js
+
+let doc = page.extractSync('/path/to/save');
 
 ```
 
@@ -173,11 +187,19 @@ document.saveSync('path.pdf') //save as
 
 ```js
 
+const scale = 2;
+
+let image = page.getImageSync();
+let image1 = page.getImageSync(scale); //scaled
+let image2 = page.getImageSync(500, 500); //width, height - crop on center
+
 ```
 
 #### Fit image
 
 ```js
+
+image.fitSync(100, 100).saveSync('/path/to/save');
 
 ```
 
@@ -185,17 +207,21 @@ document.saveSync('path.pdf') //save as
 
 ```js
 
+image.cropSync(301, 301).saveSync('/path/to/save');
+
 ```
 
 #### Save image
 
 ```js
 
+image.saveSync('/path/to/save');
+
 ```
 
 Known issues
 ------------
-
+Before install this module, check whether jvm is installed. To compile this module you need to install JDK.
 
 Not implemented yet
 ------------
