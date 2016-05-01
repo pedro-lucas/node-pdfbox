@@ -1,6 +1,11 @@
 package br.com.appmania;
 
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Created by PedroLucas on 3/9/16.
@@ -12,35 +17,26 @@ public class Main {
         PDFDocument doc = null;
 
         try {
-            doc = PDFDocument.load("spec/files/.pdf");
+            doc = PDFDocument.load("spec/files/form1.pdf");
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
-        System.out.println("Title: " + doc.getInformation("Title"));
-        System.out.println("author: " + doc.getInformation("Author"));
-
         PDFPage page = doc.getPage(0);
-        PDFPageImage pageImage = null;
 
-        try {
+        PDDocumentCatalog docCatalog = doc.getDocument().getDocumentCatalog();
+        PDAcroForm acroForm = docCatalog.getAcroForm();
 
-            pageImage = page.getImage();
-            /*
-            int x = (int)((pageImage.getImage().getWidth() - 300) / 2);
-            int y = (int)((pageImage.getImage().getHeight() - 300) / 2);
+        Iterator<PDField> it = acroForm.getFieldIterator();
 
-            pageImage.save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/normal.png", "png");
-            pageImage.crop(new Rectangle(x, y, 300, 300)).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/croped.png", "png");
-            pageImage.fitImage(100, 100).save("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/tmp/fit.png", "png");
-
-            System.out.println("TEXT: " + page.getText());
-            */
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
+        while (it.hasNext()) {
+            PDField field = it.next();
+            System.out.println(
+                    field.getPartialName() +
+                    " - " + field.getFullyQualifiedName() +
+                    " - " + field.getAlternateFieldName() +
+                            " - " + field.getMappingName());
         }
 
     }
