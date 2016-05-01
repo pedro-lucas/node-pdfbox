@@ -12,8 +12,7 @@ public class Main {
         PDFDocument doc = null;
 
         try {
-            doc = PDFDocument.load("/Users/PedroLucas/Documents/Repository/node-pdfbox/spec/files/multi-page.pdf");
-//            doc = PDFDocument.load("/Users/PedroLucas/Desktop/teste1.pdf");
+            doc = PDFDocument.load("/Users/Pedro/Documents/Repository/node-pdfbox/spec/files/multi-page.pdf");
         } catch (IOException e) {
             e.printStackTrace();
             return;

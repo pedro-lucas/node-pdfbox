@@ -15,17 +15,17 @@ gulp.task('test', ['clear-test'], function() {
 });
 
 gulp.task('java-compile', shell.task([
-  'javac -classpath .:"' + path.join(__dirname, 'src-library/*')
-	+ '" ' + path.join(__dirname, 'src-java/br/com/appmania/*.java')
+  'javac -classpath .:"' + path.join(__dirname, 'src/main/java/*')
+	+ '" ' + path.join(__dirname, 'src/main/java/br/com/appmania/*.java')
 ]));
 
 gulp.task('java-copy', function() {
-	return gulp.src('src-java/**/*.class')
+	return gulp.src('src/main/java/**/*.class')
 	.pipe(gulp.dest('out/production/node-pdfbox'));
 });
 
 gulp.task('java-clean', function() {
-	return gulp.src('src-java/**/*.class')
+	return gulp.src('src/main/java/**/*.class')
 	.pipe(clean());
 });
 
