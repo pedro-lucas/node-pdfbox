@@ -1,15 +1,25 @@
 package br.com.appmania;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
+import org.apache.pdfbox.pdmodel.interactive.form.*;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by PedroLucas on 3/9/16.
@@ -28,16 +38,16 @@ public class PDFDocument {
         this.document = PDDocument.load(new File(path));
     }
 
+    public static PDFDocument load(String path) throws IOException {
+        return new PDFDocument(path);
+    }
+
     public int pagesCount() {
         return document.getNumberOfPages();
     }
 
     public PDFPage getPage(int index) {
         return new PDFPage(document, index);
-    }
-
-    public static PDFDocument load(String path) throws IOException {
-        return new PDFDocument(path);
     }
 
     public PDDocument getDocument() {
@@ -109,17 +119,31 @@ public class PDFDocument {
         document.close();
     }
 
-    public void flatten() {
+    public void flatten() throws IOException {
 
         PDDocumentCatalog docCatalog = document.getDocumentCatalog();
         PDAcroForm acroForm = docCatalog.getAcroForm();
 
         Iterator<PDField> fields = acroForm.getFieldIterator();
 
-        while(fields.hasNext()) {
+        while (fields.hasNext()) {
+
             PDField field = fields.next();
-            field.setReadOnly(true);
+            if(PDTextField.class.isInstance(field)) {
+                field.setReadOnly(true);
+            }else{
+                field.setFieldFlags(3);
+            }
+
         }
+
+        AccessPermission ap = new AccessPermission();
+        ap.setCanModify(false);
+        ap.setReadOnly();
+        StandardProtectionPolicy spp = new StandardProtectionPolicy(null, null, ap);
+        spp.setEncryptionKeyLength(128);
+
+        document.protect(spp);
 
     }
 

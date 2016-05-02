@@ -1,5 +1,7 @@
 package br.com.appmania;
 
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.*;
 
@@ -54,6 +56,12 @@ public class Main {
 
         try {
             txtGivenName.setValue("fill form");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            doc.flatten();
         } catch (IOException e) {
             e.printStackTrace();
         }
