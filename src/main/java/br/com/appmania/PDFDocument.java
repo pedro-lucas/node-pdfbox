@@ -11,6 +11,8 @@ import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionJavaScript;
+import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
 import org.apache.pdfbox.pdmodel.interactive.form.*;
@@ -127,21 +129,14 @@ public class PDFDocument {
         Iterator<PDField> fields = acroForm.getFieldIterator();
 
         while (fields.hasNext()) {
-
             PDField field = fields.next();
-            if(PDTextField.class.isInstance(field)) {
-                field.setReadOnly(true);
-            }else{
-                field.setFieldFlags(3);
-            }
-
+            field.setReadOnly(true);
         }
 
         AccessPermission ap = new AccessPermission();
         ap.setCanModify(false);
         ap.setReadOnly();
         StandardProtectionPolicy spp = new StandardProtectionPolicy(null, null, ap);
-        spp.setEncryptionKeyLength(128);
 
         document.protect(spp);
 
