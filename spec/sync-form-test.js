@@ -8,6 +8,7 @@ const PDFDocument = require('../index');
 describe("PDF Document operations sync", function() {
 
   let doc = null;
+  let form = null;
 
   beforeAll(function() {
     jasmine.addMatchers(matchers);
@@ -19,12 +20,25 @@ describe("PDF Document operations sync", function() {
   });
 
   it('Load form', function() {
+    form = doc.getFormSync();
+    expect(form !== undefined).toBeTruthy();
+  });
 
-    let form = doc.getFormSync();
-    let fields = form.getFieldsSync();
+  it('Get fields', function() {
+    let fields = form.getFieldsSync().toArraySync();
+    expect(fields.length == 17).toBeTruthy();
+  });
 
-    //console.log('field', fields);
+  it('Get fields by name', function() {
+    let field = form.getFieldSync('Given Name Text Box');
+    expect(field !== undefined).toBeTruthy();
+  });
 
+  it('Flatten document', function() {
+    let file = path.join(__dirname, 'tmp', 'flatten-form.pdf');
+    doc.flattenSync();
+    doc.saveSync(file)
+    expect(file).toHasFile();
   });
 
 });

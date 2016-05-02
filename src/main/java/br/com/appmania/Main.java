@@ -29,7 +29,6 @@ public class Main {
 
         Iterator<PDField> it = acroForm.getFieldIterator();
         List<PDField> list =  acroForm.getFields();
-        list.
 
         PDTextField txtGivenName = (PDTextField) acroForm.getField("Given Name Text Box");
         PDTextField txtFamilyName = (PDTextField) acroForm.getField("Family Name Text Box");

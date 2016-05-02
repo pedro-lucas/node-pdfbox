@@ -3,9 +3,13 @@ package br.com.appmania;
 import java.io.File;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Created by PedroLucas on 3/9/16.
@@ -103,6 +107,20 @@ public class PDFDocument {
 
     public void close() throws IOException {
         document.close();
+    }
+
+    public void flatten() {
+
+        PDDocumentCatalog docCatalog = document.getDocumentCatalog();
+        PDAcroForm acroForm = docCatalog.getAcroForm();
+
+        Iterator<PDField> fields = acroForm.getFieldIterator();
+
+        while(fields.hasNext()) {
+            PDField field = fields.next();
+            field.setReadOnly(true);
+        }
+
     }
 
 }
