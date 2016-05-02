@@ -101,4 +101,8 @@ public class PDFDocument {
         return path;
     }
 
+    public void close() throws IOException {
+        document.close();
+    }
+
 }

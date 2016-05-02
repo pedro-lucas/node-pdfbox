@@ -13,8 +13,12 @@ describe("PDF Document operations sync", function() {
   let page = null;
   let image = null;
 
-  beforeEach(function() {
+  beforeAll(function() {
     jasmine.addMatchers(matchers);
+  });
+
+  afterAll(function() {
+    doc.closeSync();
   });
 
   it('Load document', function() {
@@ -117,6 +121,8 @@ describe("PDF Document operations sync", function() {
 
     expect(doc).toBeInstanceOf(PDFDocument);
 
+    doc.closeSync();
+
   });
 
   it('Create and add one page to new pdf', function() {
@@ -130,6 +136,8 @@ describe("PDF Document operations sync", function() {
 
     expect(nDocument.pagesCountSync() == 2).toBeTruthy();
 
+    nDocument.closeSync();
+
   });
 
   it('Add pages from pdf', function() {
@@ -141,6 +149,8 @@ describe("PDF Document operations sync", function() {
     nDocument.saveSync();
 
     expect(nDocument.pagesCountSync() == 11).toBeTruthy();
+
+    nDocument.closeSync();
 
   });
 

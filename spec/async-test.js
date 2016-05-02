@@ -13,7 +13,7 @@ describe("PDF Document operations async", function() {
   let page = null;
   let image = null;
 
-  beforeEach(function() {
+  beforeAll(function() {
 
     doc = PDFDocument.loadSync(path.join(__dirname, 'files', 'multi-page.pdf'));
     page = doc.getPageSync(0);
@@ -21,6 +21,10 @@ describe("PDF Document operations async", function() {
 
     jasmine.addMatchers(matchers);
 
+  });
+
+  afterAll(function() {
+    doc.closeSync();
   });
 
   it('Load document', function(done) {
@@ -257,6 +261,7 @@ describe("PDF Document operations async", function() {
     page.extract(file)
     .then(function(doc) {
       expect(doc).toBeInstanceOf(PDFDocument);
+      doc.closeSync();
     })
     .catch(function(err) {
       throw err;
@@ -291,6 +296,7 @@ describe("PDF Document operations async", function() {
     })
     .finally(function() {
       done();
+      nDocument.closeSync();
     });
 
   });
@@ -319,6 +325,7 @@ describe("PDF Document operations async", function() {
     })
     .finally(function() {
       done();
+      nDocument.closeSync();
     });
 
   });
