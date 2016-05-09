@@ -53,7 +53,7 @@ let image = page.getImageSync();
 let imageScaled = page.getImageSync(2.0);
 let imageScaledToFill = page.getImageSync(1300, 1800);
 
-let newDocument = page.exportSync('path-to-new-document.pdf');
+let newDocument = page.extractSync('path-to-new-document.pdf');
 newDocument.addPageSync(document.getPageSync(3));
 newDocument.addPagesSync(document, 0, 10, 1);
 
