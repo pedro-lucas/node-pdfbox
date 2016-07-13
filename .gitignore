@@ -1,6 +1,6 @@
 node_modules
 npm-debug.log
-.classpath
 hs_err_pid*
 .idea
 target
+/out/production/node-pdfbox/*.java
