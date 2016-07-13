@@ -3,4 +3,4 @@ npm-debug.log
 hs_err_pid*
 .idea
 target
-/out/production/node-pdfbox/*.java
+/out/**/*.class

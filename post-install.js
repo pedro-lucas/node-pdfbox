@@ -1,5 +1,6 @@
 const exec = require('child_process').exec;
 const path = require('path');
+const javahome = require('find-java-home');
 
 const command = (command) => {
   let child = exec(command, function (error, stdout, stderr) {
@@ -11,4 +12,10 @@ const command = (command) => {
   });
 };
 
-command('javac -classpath .:"' + path.join(__dirname, 'src-library/*') + '" -d "' + path.join(__dirname, 'out/production/node-pdfbox') + '" ' + path.join(__dirname, 'src/main/java/br/com/appmania/*.java'));
+javahome((err, home) => {
+  if(err) {
+    console.error(err);
+    exit(1);
+  }
+  command(home.trim() + '/bin/javac -classpath .:"' + path.join(__dirname, 'src-library/*') + '" -d "' + path.join(__dirname, 'out/production/node-pdfbox') + '" ' + path.join(__dirname, 'src/main/java/br/com/appmania/*.java'));
+});

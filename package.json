@@ -32,6 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "extend": "^3.0.0",
+    "find-java-home": "^0.1.2",
     "java": "^0.7.0",
     "when": "^3.7.7"
   },
