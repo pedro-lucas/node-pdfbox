@@ -17,5 +17,5 @@ javahome((err, home) => {
     console.error(err);
     exit(1);
   }
-  command(home.trim() + '/bin/javac -classpath .:"' + path.join(__dirname, 'src-library/*') + '" -d "' + path.join(__dirname, 'out/production/node-pdfbox') + '" ' + path.join(__dirname, 'src/main/java/br/com/appmania/*.java'));
+  command(path.join(home.trim(), 'bin', 'javac') + ' -classpath .:"' + path.join(__dirname, 'src-library/*') + '" -d "' + path.join(__dirname, 'out/production/node-pdfbox') + '" ' + path.join(__dirname, 'src/main/java/br/com/appmania/*.java'));
 });
