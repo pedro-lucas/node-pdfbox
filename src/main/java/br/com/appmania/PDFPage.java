@@ -4,6 +4,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.rendering.ImageType;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -60,22 +61,32 @@ public class PDFPage {
         return getImage(1.0f);
     }
 
+    public PDFPageImage getImage(String format) throws IOException {
+        return getImage(1.0f, format);
+    }
+
     public PDFPageImage getImage(float scale) throws IOException {
+        return this.getImage(scale, "jpg");
+    }
+
+    public PDFPageImage getImage(float scale, String format) throws IOException {
         PDFRenderer render = new PDFRenderer(document);
-        BufferedImage image = render.renderImage(pageIndex, scale);
+        BufferedImage image = render.renderImage(pageIndex, scale, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
         return new PDFPageImage(image);
     }
 
     public PDFPageImage getImage(int width, int height) throws IOException {
+        return this.getImage(width, height, "jpg");
+    }
 
+    public PDFPageImage getImage(int width, int height, String format) throws IOException {
         float scale = this.getAspectFillScale(width, height);
-        PDFPageImage image = this.getImage(scale);
+        PDFPageImage image = this.getImage(scale, format);
 
         int x = (int)((image.getImage().getWidth() - width) / 2.0f);
         int y = (int)((image.getImage().getHeight() - height) / 2.0f);
 
         return image.crop(new Rectangle(x, y, width, height));
-
     }
 
     public String getText() throws IOException {
