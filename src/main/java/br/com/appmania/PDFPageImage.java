@@ -61,9 +61,7 @@ public class PDFPageImage {
 
         String ext = getFileExtension(new File(path));
 
-        if(ext.equals(PDFPageImage.IMAGE_FORMAT_PNG)) {
-            ext = PDFPageImage.IMAGE_FORMAT_PNG;
-        }else {
+        if(!ext.equals(PDFPageImage.IMAGE_FORMAT_PNG)) {
             ext = PDFPageImage.IMAGE_FORMAT_JPG;
         }
 
