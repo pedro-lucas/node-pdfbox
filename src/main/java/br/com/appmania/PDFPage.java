@@ -65,13 +65,13 @@ public class PDFPage {
         return getImage(1.0f, format);
     }
 
-    public PDFPageImage getImage(float scale) throws IOException {
-        return this.getImage(scale, "jpg");
+    public PDFPageImage getImage(double scale) throws IOException {
+        return this.getImage((float)scale, "jpg");
     }
 
-    public PDFPageImage getImage(float scale, String format) throws IOException {
+    public PDFPageImage getImage(double scale, String format) throws IOException {
         PDFRenderer render = new PDFRenderer(document);
-        BufferedImage image = render.renderImage(pageIndex, scale, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
+        BufferedImage image = render.renderImage(pageIndex, (float)scale, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
         return new PDFPageImage(image);
     }
 
