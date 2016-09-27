@@ -1,3 +1,5 @@
+'use strict';
+
 const exec = require('child_process').exec;
 const path = require('path');
 const javahome = require('find-java-home');
