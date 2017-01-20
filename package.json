@@ -1,6 +1,6 @@
 {
   "name": "node-pdfbox",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Bridge module to library Apache PDFBox",
   "main": "index.js",
   "homepage": "http://objota.com.br",
@@ -32,8 +32,8 @@
   "license": "MIT",
   "dependencies": {
     "extend": "^3.0.0",
-    "find-java-home": "^0.1.2",
-    "java": "^0.7.2",
+    "find-java-home": "^0.1.4",
+    "java": "^0.8.0",
     "when": "^3.7.7"
   },
   "devDependencies": {
