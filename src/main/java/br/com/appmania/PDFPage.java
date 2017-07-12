@@ -7,6 +7,8 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.rendering.ImageType;
 
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -71,8 +73,9 @@ public class PDFPage {
 
     public PDFPageImage getImage(double scale, String format) throws IOException {
         PDFRenderer render = new PDFRenderer(document);
-        BufferedImage image = render.renderImage(pageIndex, (float)scale, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
-        return new PDFPageImage(image);
+        //Scale to 2x - There is a bug on PDFBOX render 1x
+        BufferedImage image = render.renderImage(pageIndex, (float)scale * 2, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
+        return new PDFPageImage(image).scale(0.5f);
     }
 
     public PDFPageImage getImage(int width, int height) throws IOException {

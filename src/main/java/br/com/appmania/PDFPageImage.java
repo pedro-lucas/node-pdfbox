@@ -25,6 +25,21 @@ public class PDFPageImage {
 
     }
 
+    public PDFPageImage resize(int width, int height) {
+
+        int w = image.getWidth();
+        int h = image.getHeight();
+
+        BufferedImage resized = new BufferedImage(width, height, image.getType());
+        Graphics2D g = resized.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(image, 0, 0, width, height, 0, 0, w, h, null);
+        g.dispose();
+
+        return new PDFPageImage(resized);
+
+    }
+
     public PDFPageImage fit(int width, int height) {
 
         int w = image.getWidth();
@@ -35,14 +50,12 @@ public class PDFPageImage {
         int newWidth = (int)(w * scale);
         int newHeight = (int)(h * scale);
 
-        BufferedImage resized = new BufferedImage(newWidth, newHeight, image.getType());
-        Graphics2D g = resized.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(image, 0, 0, newWidth, newHeight, 0, 0, w, h, null);
-        g.dispose();
+        return resize(newWidth, newHeight);
 
-        return new PDFPageImage(resized);
+    }
 
+    public PDFPageImage scale(float scale) {
+        return resize((int)(getWidth() * scale), (int)(getHeight() * scale));
     }
 
     public int getWidth() {
