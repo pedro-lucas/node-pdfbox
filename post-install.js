@@ -18,7 +18,7 @@ const command = (command) => {
 javahome((err, home) => {
   if(err) {
     console.error(err);
-    exit(1);
+    process.exit(1);
   }
   command('"' + path.join(home.trim(), 'bin', 'javac')
   + '" -classpath "' + path.join(__dirname, 'src-library/*')
