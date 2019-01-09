@@ -94,7 +94,7 @@ public class PDFPage {
 
     public String getText() throws IOException {
         PDFTextStripper textStripper = new PDFTextStripper();
-        textStripper.setStartPage(pageIndex);
+        textStripper.setStartPage(pageIndex+1);
         textStripper.setEndPage(pageIndex+1);
         textStripper.setLineSeparator("\n");
         return textStripper.getText(document);
