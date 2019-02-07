@@ -97,12 +97,16 @@ public class PDFPage {
         return image.crop(new Rectangle(x, y, width, height));
     }
 
-    public String getText() throws IOException {
+    public String getText() throws IOException {	
         PDFTextStripper textStripper = new PDFTextStripper();
         textStripper.setStartPage(pageIndex+1);
         textStripper.setEndPage(pageIndex+1);
         textStripper.setLineSeparator("\n");
         return textStripper.getText(document);
+    }
+
+    public String getTest() throws IOException {
+        return "GetTest" + pageIndex;
     }
 
     public static void getLink(PDPage page) throws IOException {    	
