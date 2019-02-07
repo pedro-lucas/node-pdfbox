@@ -6,7 +6,6 @@ package br.com.appmania;
 public class Main {
 
     public static void main(String[] args) {
-
         try {
             PDFDocument doc = PDFDocument.load("spec/files/multi-page.pdf");
             PDFPage page = doc.getPage(0);
