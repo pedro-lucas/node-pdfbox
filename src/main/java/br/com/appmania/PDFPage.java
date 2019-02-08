@@ -27,6 +27,7 @@ public class PDFPage {
     private int pageIndex;
     private PDDocument document;
 
+
     public PDFPage(PDDocument document, int index) {
         this.document = document;
         this.pageIndex = index;
@@ -105,12 +106,10 @@ public class PDFPage {
         return textStripper.getText(document);
     }
 
-    public String getTest() throws IOException {
-        return "GetTest" + pageIndex;
-    }
-
-    public static void getLink(PDPage page) throws IOException {    	
-    	    PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+    public String getLink() throws IOException {   
+    		PDPage page = this.getPage();
+    		String pageLink = null;
+    	    PDFTextStripperByArea stripper = new PDFTextStripperByArea();    		
     	    List<PDAnnotation> annotations = page.getAnnotations();
     	    //System.out.println("Annotations:"+ annotations.size());
     	    //first setup text extraction regions
@@ -154,11 +153,12 @@ public class PDFPage {
     	            String urlText = stripper.getTextForRegion( "" + j );
     	            if( action instanceof PDActionURI )
     	            {
-    	                PDActionURI uri = (PDActionURI)action;
-    	                System.out.println( "Page :" + urlText.trim() + "'=" + uri.getURI() );
+    	            	PDActionURI uri = (PDActionURI)action;
+    	            	pageLink = uri.getURI();
     	            }
     	        }
     	    }
+    	    return pageLink;
     	}
 
     
