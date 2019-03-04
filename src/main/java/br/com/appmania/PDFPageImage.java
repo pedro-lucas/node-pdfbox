@@ -36,7 +36,9 @@ public class PDFPageImage {
         g.drawImage(image, 0, 0, width, height, 0, 0, w, h, null);
         g.dispose();
 
-        return new PDFPageImage(resized);
+        PDFPageImage pdfImageObject = new PDFPageImage(resized);
+        resized.flush();
+        return pdfImageObject;
 
     }
 
@@ -68,6 +70,7 @@ public class PDFPageImage {
 
     public void save(String path, String formatName) throws IOException {
         ImageIO.write(image, formatName, new File(path));
+        image.flush();
     }
 
     public void save(String path) throws IOException {
@@ -92,6 +95,9 @@ public class PDFPageImage {
         } catch (Exception e) {
             return "";
         }
+    }
+    public void flush(){
+        this.image.flush();
     }
 
 }

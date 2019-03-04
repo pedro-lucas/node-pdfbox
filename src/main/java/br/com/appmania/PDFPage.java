@@ -26,10 +26,16 @@ public class PDFPage {
     private PDPage page;
     private int pageIndex;
     private PDDocument document;
+    private PDFRenderer render;
 
-
-    public PDFPage(PDDocument document, int index) {
+    public PDFPage(PDDocument document) {
+        System.out.println("PDFPage Constructor New:: " + document);
         this.document = document;
+        render = new PDFRenderer(document);
+    }
+
+    public void initializePage(int index) {
+        System.out.println("PDFPage initializePage:: " + document);
         this.pageIndex = index;
         this.page = document.getPage(index);
     }
@@ -78,10 +84,12 @@ public class PDFPage {
     }
 
     public PDFPageImage getImage(double scale, String format) throws IOException {
-        PDFRenderer render = new PDFRenderer(document);
         //Scale to 2x - There is a bug on PDFBOX render 1x
-        BufferedImage image = render.renderImage(pageIndex, (float)scale * 2, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
-        return new PDFPageImage(image).scale(0.5f);
+        BufferedImage image = null;
+        image = render.renderImage(pageIndex, (float)scale * 2, format.equals("jpg") ? ImageType.RGB : ImageType.ARGB);
+        PDFPageImage imageObj = new PDFPageImage(image).scale(0.5f);
+        image.flush();
+        return imageObj;
     }
 
     public PDFPageImage getImage(int width, int height) throws IOException {
