@@ -6,12 +6,10 @@ package br.com.appmania;
 public class Main {
 
     public static void main(String[] args) {
-
-        try {
-            PDFDocument doc = PDFDocument.load("spec/files/multi-page.pdf");
-            PDFPage page = doc.getPage(0);
-            PDFPageImage image = page.getImage(1, "png");
-            image.save("spec/tmp/image.png");
+        try {        	            
+        	PDFDocument doc = PDFDocument.load("spec/files/linktest.PDF");
+        	PDFPage page = doc.getPage(4);           
+            System.out.println(page.getLink());
         } catch (Exception e) {
             e.printStackTrace();
             return;

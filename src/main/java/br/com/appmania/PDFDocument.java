@@ -30,14 +30,17 @@ public class PDFDocument {
 
     private PDDocument document;
     private String path;
+    private PDFPage pdfPageObj;
 
     public PDFDocument(PDDocument doc) {
         this.document = doc;
+        pdfPageObj = new PDFPage(this.document);
     }
 
     public PDFDocument(String path) throws IOException {
         this.path = path;
         this.document = PDDocument.load(new File(path));
+        pdfPageObj = new PDFPage(this.document);
     }
 
     public static PDFDocument load(String path) throws IOException {
@@ -49,7 +52,8 @@ public class PDFDocument {
     }
 
     public PDFPage getPage(int index) {
-        return new PDFPage(document, index);
+        pdfPageObj.initializePage(index);
+        return pdfPageObj;
     }
 
     public PDDocument getDocument() {
@@ -118,6 +122,7 @@ public class PDFDocument {
     }
 
     public void close() throws IOException {
+        System.out.println("PDFDocument CLOSE Method");
         document.close();
     }
 
