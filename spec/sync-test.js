@@ -1,5 +1,3 @@
-'use strict';
-
 const matchers = require('./matchers');
 const path = require('path');
 

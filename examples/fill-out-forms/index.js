@@ -1,5 +1,3 @@
-'use strict';
-
 const PDFDocument = require('../../index');
 const path = require('path');
 const loadPath = path.join(__dirname, '..', '..', 'spec', 'files', 'form.pdf');

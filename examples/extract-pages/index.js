@@ -1,5 +1,3 @@
-'use strict';
-
 const PDFDocument = require('../../index');
 const path = require('path');
 const currentDocumentPath = path.join(__dirname, '..', '..', 'spec', 'files', 'multi-page.pdf');

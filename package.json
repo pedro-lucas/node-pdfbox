@@ -31,17 +31,15 @@
   "author": "Pedro Lucas da Silva Junior <pedro@objota.com.br>",
   "license": "MIT",
   "dependencies": {
-    "extend": "^3.0.0",
-    "find-java-home": "^0.1.4",
-    "java": "^0.8.0",
-    "when": "^3.7.7"
+    "extend": "^3.0.2",
+    "find-java-home": "^1.1.0",
+    "java": "^0.12.1",
+    "when": "^3.7.8"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-util": "^3.0.7",
-    "gulp-clean": "^0.3.2",
-    "gulp-jasmine": "^2.3.0",
-    "gulp-shell": "^0.5.2",
-    "run-sequence": "^1.1.5"
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-jasmine": "^4.0.0",
+    "gulp-shell": "^0.8.0"
   }
 }

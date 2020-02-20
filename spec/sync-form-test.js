@@ -1,11 +1,9 @@
-'use strict';
-
 const matchers = require('./matchers');
 const path = require('path');
 
 const PDFDocument = require('../index');
 
-describe("PDF Document operations sync", function() {
+describe("PDF Form operations sync", function() {
 
   let doc = null;
   let form = null;

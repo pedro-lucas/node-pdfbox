@@ -1,12 +1,10 @@
-'use strict';
-
 const exec = require('child_process').exec;
 const path = require('path');
 const javahome = require('find-java-home');
 const os = require('os');
 
 const command = (command) => {
-  let child = exec(command, function (error, stdout, stderr) {
+  exec(command, function (error, stdout, stderr) {
     if (error) {
       console.error(`exec error: ${error}`);
       return;

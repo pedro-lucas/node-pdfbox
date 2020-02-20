@@ -1,5 +1,3 @@
-'use strict';
-
 const java = require('../../lib/java').getJavaInstance();
 const PDFDocument = require('../../index');
 const path = require('path');
